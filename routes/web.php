@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\AssetController;
 use App\Models\Category;
 
 Route::get('/test', function () {
@@ -24,6 +25,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::resource('categories', CategoryController::class);
     Route::resource('employees', EmployeeController::class);
+    Route::resource('assets', AssetController::class);
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');

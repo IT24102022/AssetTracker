@@ -6,14 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Asset extends Model
 {
-     protected $fillable = [
+    protected $fillable = [
         'category_id',
         'asset_code',
         'name',
         'serial_number',
         'status',
         'purchase_date',
-        'cost'
+        'cost',
     ];
 
     public function category()

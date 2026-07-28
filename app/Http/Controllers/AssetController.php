@@ -3,63 +3,60 @@
 namespace App\Http\Controllers;
 
 use App\Models\Asset;
-use Illuminate\Http\Request;
+use App\Models\Category;
+use App\Http\Requests\StoreAssetRequest;
+use App\Http\Requests\UpdateAssetRequest;
+
 
 class AssetController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
-    {
-        //
-    }
+{
+    $assets = Asset::with('category')
+        ->latest()
+        ->get();
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
+    return view('assets.index', compact('assets'));
+}
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+public function create()
+{
+    $categories = Category::orderBy('name')->get();
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Asset $asset)
-    {
-        //
-    }
+    return view('assets.create', compact('categories'));
+}
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Asset $asset)
-    {
-        //
-    }
+public function store(StoreAssetRequest $request)
+{
+    Asset::create($request->validated());
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Asset $asset)
-    {
-        //
-    }
+    return redirect()
+        ->route('assets.index')
+        ->with('success', 'Asset created successfully.');
+}
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Asset $asset)
-    {
-        //
-    }
+public function edit(Asset $asset)
+{
+    $categories = Category::orderBy('name')->get();
+
+    return view('assets.edit', compact('asset', 'categories'));
+}
+
+public function update(UpdateAssetRequest $request, Asset $asset)
+{
+    $asset->update($request->validated());
+
+    return redirect()
+        ->route('assets.index')
+        ->with('success', 'Asset updated successfully.');
+}
+
+public function destroy(Asset $asset)
+{
+    $asset->delete();
+
+    return redirect()
+        ->route('assets.index')
+        ->with('success', 'Asset deleted successfully.');
+}
 }
