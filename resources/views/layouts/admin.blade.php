@@ -48,6 +48,11 @@
        class="block p-3 rounded hover:bg-slate-700">
         Asset Assignments
     </a>  
+    
+    <a href="{{ route('assignment-history') }}"
+       class="block p-3 rounded hover:bg-slate-700">
+        Assignment History
+    </a>  
           
 
         </nav>

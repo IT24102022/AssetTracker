@@ -144,5 +144,20 @@ public function return(AssetAssignment $asset_assignment)
         ->route('asset-assignments.index')
         ->with('success', 'Asset returned successfully.');
 }
+
+public function history()
+{
+    $assignments = AssetAssignment::with([
+            'asset',
+            'employee'
+        ])
+        ->latest()
+        ->paginate(10);
+
+    return view(
+        'asset_assignments.history',
+        compact('assignments')
+    );
+}
     
 }

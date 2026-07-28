@@ -41,6 +41,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])
     ->name('dashboard');
 
+    Route::get(
+    'assignment-history',
+    [AssetAssignmentController::class, 'history']
+)->name('assignment-history');
+
 });
 
 require __DIR__.'/auth.php';
