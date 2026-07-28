@@ -39,6 +39,15 @@
                 Employees
             </a>
 
+                 <a href="{{ route('assets.index') }}"
+       class="block p-3 rounded hover:bg-slate-700">
+        Assets
+    </a>
+
+    <a href="{{ route('asset-assignments.index') }}"
+       class="block p-3 rounded hover:bg-slate-700">
+        Asset Assignments
+    </a>  
           
 
         </nav>
