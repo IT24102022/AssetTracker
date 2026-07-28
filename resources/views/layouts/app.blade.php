@@ -11,47 +11,31 @@
 <body class="bg-gray-100">
 
 <nav class="bg-blue-600 text-white p-4">
-    <div class="container mx-auto flex justify-between">
+    <div class="flex items-center gap-6">
 
-        <a href="{{ url('/') }}" class="font-bold text-xl">
-            Asset Tracker
+    <a href="{{ url('/') }}" class="font-bold text-xl">
+        Asset Tracker
+    </a>
+
+    @auth
+
+        <a href="{{ route('categories.index') }}"
+           class="hover:text-gray-200">
+
+            Categories
+
         </a>
 
-        <div>
+        <a href="{{ route('employees.index') }}"
+           class="hover:text-gray-200">
 
-            @auth
+            Employees
 
-                <span class="mr-4">
-                    Welcome, {{ Auth::user()->name }}
-                </span>
+        </a>
 
-                <form action="{{ route('logout') }}"
-                      method="POST"
-                      class="inline">
+    @endauth
 
-                    @csrf
-
-                    <button class="bg-red-500 px-3 py-1 rounded">
-                        Logout
-                    </button>
-
-                </form>
-
-            @else
-
-                <a href="{{ route('login') }}" class="mr-4">
-                    Login
-                </a>
-
-                <a href="{{ route('register') }}">
-                    Register
-                </a>
-
-            @endauth
-
-        </div>
-
-    </div>
+</div>
 </nav>
 
 <div class="container mx-auto mt-8">

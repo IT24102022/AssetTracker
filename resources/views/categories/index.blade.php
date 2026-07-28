@@ -1,5 +1,5 @@
-@extends('layouts.app')
-
+@extends('layouts.admin')
+@section('title','Categories')
 @section('content')
 
 <h1 class="text-3xl font-bold mb-6">Categories</h1>
