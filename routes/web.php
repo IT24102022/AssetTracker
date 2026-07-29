@@ -10,6 +10,8 @@ use App\Http\Controllers\AssetAssignmentController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ExportController;
 use App\Http\Controllers\QRCodeController;
+use App\Mail\TestMail;
+use Illuminate\Support\Facades\Mail;
 
 
 Route::get('/test', function () {
@@ -57,7 +59,12 @@ Route::get('/export/assets', [ExportController::class, 'assets'])
 Route::get('/export/assignment-history', [ExportController::class, 'assignmentHistory'])
     ->name('export.assignment-history');
     
-    
+    Route::get('/test-email', function () {
+
+    Mail::to('employee@example.com')->send(new TestMail());
+
+    return 'Test email sent!';
+});
 
     });
 

@@ -7,6 +7,8 @@ use App\Models\Asset;
 use App\Models\Employee;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreAssetAssignmentRequest;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\AssetAssignedMail;
 
 class AssetAssignmentController extends Controller
 {
@@ -62,31 +64,40 @@ class AssetAssignmentController extends Controller
                 'employee_id' => 'Employee is inactive.'
             ]);
     }
+$assignment = AssetAssignment::create([
+    'asset_id' => $asset->id,
+    'employee_id' => $employee->id,
+    'assigned_at' => $request->assigned_at,
+    'notes' => $request->notes,
+    'created_by' => auth()->id(),
+]);
 
-    AssetAssignment::create([
-
-        'asset_id'=>$asset->id,
-
-        'employee_id'=>$employee->id,
-
-        'assigned_at'=>$request->assigned_at,
-
-        'notes'=>$request->notes,
-
-        'created_by'=>auth()->id(),
-
-    ]);
+$assignment->load([
+    'employee',
+    'asset.category',
+]);
 
     $asset->update([
 
         'status'=>'Assigned'
 
     ]);
+    
+ try {
+    Mail::to($employee->email)->send(new AssetAssignedMail($assignment));
 
     return redirect()
         ->route('asset-assignments.index')
-        ->with('success','Asset assigned successfully.');
+        ->with('success', 'Asset assigned successfully. Email notification sent successfully.');
+
+} catch (\Exception $e) {
+
+    return redirect()
+        ->route('asset-assignments.index')
+        ->with('warning', 'Asset assigned successfully, but the email could not be sent.');
 }
+
+} 
 
     /**
      * Display the specified resource.
