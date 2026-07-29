@@ -73,4 +73,12 @@ public function destroy(Asset $asset)
         ->route('assets.index')
         ->with('success', 'Asset deleted successfully.');
 }
+
+public function publicShow(\App\Models\Asset $asset)
+{
+    $asset->load('category');
+
+    return view('assets.public-show', compact('asset'));
+}
+
 }

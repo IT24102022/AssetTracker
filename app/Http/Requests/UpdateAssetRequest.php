@@ -40,9 +40,15 @@ class UpdateAssetRequest extends FormRequest
 
         'status' => 'required|in:Available,Assigned,Maintenance,Retired',
 
-        'purchase_date' => 'required|date',
+        'purchase_date' => 'required|date|before_or_equal:today',
 
         'cost' => 'required|numeric|min:0',
         ];
     }
+    public function messages(): array
+{
+    return [
+        'purchase_date.before_or_equal' => 'The purchase date cannot be a future date.',
+    ];
+}
 }

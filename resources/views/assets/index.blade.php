@@ -4,6 +4,17 @@
 
 @section('content')
 
+<div
+    x-data="{
+        qrModal: false,
+        selectedAsset: {
+            code: '',
+            qr: '',
+            download: ''
+        }
+    }"
+>
+
 <div class="flex justify-between items-center mb-6">
     <h1 class="text-3xl font-bold">Assets</h1>
 
@@ -142,7 +153,20 @@
                 <tr class="border-t hover:bg-gray-50">
 
                     <td class="p-3">
-                        {{ $asset->asset_code }}
+                        <a
+    href="#"
+    @click.prevent="
+        qrModal = true;
+        selectedAsset = {
+            code: '{{ $asset->asset_code }}',
+            qr: '{{ route('assets.qr', $asset) }}',
+            download: '{{ route('assets.qr.download', $asset) }}'
+        };
+    "
+    class="text-blue-600 underline hover:text-blue-800 hover:font-semibold transition duration-200 cursor-pointer"
+>
+    {{ $asset->asset_code }}
+</a>
                     </td>
 
                     <td class="p-3">
@@ -285,5 +309,69 @@
 </div>
 
 @endif
+
+<!-- QR Code Modal -->
+<div
+    x-show="qrModal"
+    x-transition.opacity
+    x-cloak
+    class="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
+    style="display: none;"
+>
+
+    <!-- Modal -->
+    <div
+        @click.outside="qrModal = false"
+        class="bg-white rounded-xl shadow-xl w-full max-w-md p-6"
+    >
+
+        <h2 class="text-2xl font-bold text-center mb-6">
+            Asset QR Code
+        </h2>
+
+        <div class="text-center">
+
+            <p class="font-semibold">
+                Asset Code
+            </p>
+
+            <p class="text-lg mb-5" x-text="selectedAsset.code"></p>
+
+            <img
+                :src="selectedAsset.qr"
+                alt="QR Code"
+                class="mx-auto w-72 h-72 border rounded-lg"
+            >
+
+            <p class="mt-5 text-gray-600">
+                Scan with your mobile phone to view this asset's information.
+            </p>
+
+        </div>
+
+        <div class="flex justify-center gap-4 mt-8">
+
+            <a
+                :href="selectedAsset.download"
+                download
+                class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg transition"
+            >
+                Download QR
+            </a>
+
+            <button
+                @click="qrModal = false"
+                class="bg-gray-500 hover:bg-gray-600 text-white px-5 py-2 rounded-lg transition"
+            >
+                Close
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+</div>
 
 @endsection

@@ -70,10 +70,14 @@
     <!-- Purchase Date -->
     <div class="mb-4">
         <label class="block mb-2 font-semibold">Purchase Date</label>
-        <input type="date"
-               name="purchase_date"
-               value="{{ old('purchase_date') }}"
-               class="border rounded w-full p-2">
+        <input
+    type="date"
+    name="purchase_date"
+    value="{{ old('purchase_date') }}"
+    max="{{ now()->toDateString() }}"
+    class="w-full border rounded-lg px-3 py-2 @error('purchase_date') border-red-500 @enderror"
+    required
+>
     </div>
 
     <!-- Cost -->

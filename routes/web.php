@@ -9,6 +9,8 @@ use App\Models\Category;
 use App\Http\Controllers\AssetAssignmentController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ExportController;
+use App\Http\Controllers\QRCodeController;
+
 
 Route::get('/test', function () {
     return Category::all();
@@ -21,6 +23,8 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+
 
 Route::middleware('auth')->group(function () {
 
@@ -53,6 +57,20 @@ Route::get('/export/assets', [ExportController::class, 'assets'])
 Route::get('/export/assignment-history', [ExportController::class, 'assignmentHistory'])
     ->name('export.assignment-history');
     
+    
+
     });
+
+    Route::get('/asset-info/{asset}', [AssetController::class, 'publicShow'])
+    ->name('assets.public');
+
+    Route::get('/asset-info/{asset}', [QRCodeController::class, 'showAsset'])
+    ->name('assets.public');
+
+Route::get('/asset-info/{asset}/qr', [QRCodeController::class, 'qr'])
+    ->name('assets.qr');
+
+Route::get('/asset-info/{asset}/download', [QRCodeController::class, 'download'])
+    ->name('assets.qr.download');
 
 require __DIR__.'/auth.php';
