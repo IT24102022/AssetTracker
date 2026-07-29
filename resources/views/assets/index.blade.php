@@ -11,6 +11,11 @@
        class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">
         Add Asset
     </a>
+    <a href="{{ route('export.assets') }}"
+   class="inline-flex items-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
+    Export Excel
+</a>
+    
 </div>
 
 <!-- Search & Filter -->

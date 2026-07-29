@@ -8,6 +8,7 @@ use App\Http\Controllers\AssetController;
 use App\Models\Category;
 use App\Http\Controllers\AssetAssignmentController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ExportController;
 
 Route::get('/test', function () {
     return Category::all();
@@ -46,6 +47,12 @@ Route::middleware('auth')->group(function () {
     [AssetAssignmentController::class, 'history']
 )->name('assignment-history');
 
-});
+Route::get('/export/assets', [ExportController::class, 'assets'])
+    ->name('export.assets');
+
+Route::get('/export/assignment-history', [ExportController::class, 'assignmentHistory'])
+    ->name('export.assignment-history');
+    
+    });
 
 require __DIR__.'/auth.php';

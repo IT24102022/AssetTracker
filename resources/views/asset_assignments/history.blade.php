@@ -7,7 +7,10 @@
 <h1 class="text-3xl font-bold mb-6">
     Assignment History
 </h1>
-
+<a href="{{ route('export.assignment-history') }}"
+   class="inline-flex items-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
+    Export Excel
+</a>
 <table class="w-full bg-white shadow rounded">
 
     <thead class="bg-gray-100">
