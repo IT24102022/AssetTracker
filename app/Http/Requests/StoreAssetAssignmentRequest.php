@@ -12,12 +12,18 @@ class StoreAssetAssignmentRequest extends FormRequest
     }
 
     public function rules(): array
-    {
-        return [
-            'asset_id' => 'required|exists:assets,id',
-            'employee_id' => 'required|exists:employees,id',
-            'assigned_at' => 'required|date',
-            'notes' => 'nullable|string|max:500',
-        ];
-    }
+{
+    return [
+        'asset_id' => 'required|exists:assets,id',
+        'employee_id' => 'required|exists:employees,id',
+
+        'assigned_at' => [
+            'required',
+            'date',
+            'before_or_equal:today',
+        ],
+
+        'notes' => 'nullable|string|max:1000',
+    ];
+}
 }

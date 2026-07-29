@@ -77,11 +77,12 @@
 
         </label>
 
-        <input
-            type="date"
-            name="assigned_at"
-            class="border p-2 w-full"
-            value="{{ date('Y-m-d') }}">
+      <input
+    type="date"
+    name="assigned_at"
+    value="{{ old('assigned_at', now()->toDateString()) }}"
+    max="{{ now()->toDateString() }}"
+>
 
     </div>
 

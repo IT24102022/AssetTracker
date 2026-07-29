@@ -5,13 +5,13 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class CategorySeeder extends Seeder
+class AssetSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
 {
-    \App\Models\Category::factory()->count(5)->create();
+    \App\Models\Asset::factory()->count(30)->create();
 }
 }
