@@ -4,110 +4,74 @@
 
 @section('content')
 
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<div class="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-4">
 
-    <div class="bg-white shadow rounded p-6">
-        <h3 class="text-gray-500">Total Assets</h3>
-        <p class="text-4xl font-bold">{{ $totalAssets }}</p>
+    <div class="card-brutal p-6">
+        <h3 class="font-mono text-xs font-bold uppercase tracking-widest text-ink/60">01 / Total Assets</h3>
+        <p class="mt-2 font-display text-5xl">{{ $totalAssets }}</p>
     </div>
 
-    <div class="bg-green-100 shadow rounded p-6">
-        <h3 class="text-green-700">Available</h3>
-        <p class="text-4xl font-bold">{{ $availableAssets }}</p>
+    <div class="card-brutal !border-go bg-go p-6 text-paper">
+        <h3 class="font-mono text-xs font-bold uppercase tracking-widest text-paper/70">02 / Available</h3>
+        <p class="mt-2 font-display text-5xl">{{ $availableAssets }}</p>
     </div>
 
-    <div class="bg-blue-100 shadow rounded p-6">
-        <h3 class="text-blue-700">Assigned</h3>
-        <p class="text-4xl font-bold">{{ $assignedAssets }}</p>
+    <div class="card-brutal !border-wire bg-wire p-6 text-paper">
+        <h3 class="font-mono text-xs font-bold uppercase tracking-widest text-paper/70">03 / Assigned</h3>
+        <p class="mt-2 font-display text-5xl">{{ $assignedAssets }}</p>
     </div>
 
-    <div class="bg-yellow-100 shadow rounded p-6">
-        <h3 class="text-yellow-700">Maintenance</h3>
-        <p class="text-4xl font-bold">{{ $maintenanceAssets }}</p>
-    </div>
-
-</div>
-
-<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
-
-    <div class="bg-white shadow rounded p-6">
-        <h3 class="text-xl font-semibold mb-4">Employees</h3>
-        <p class="text-4xl font-bold">{{ $totalEmployees }}</p>
-    </div>
-
-    <div class="bg-white shadow rounded p-6">
-        <h3 class="text-xl font-semibold mb-4">Categories</h3>
-        <p class="text-4xl font-bold">{{ $totalCategories }}</p>
+    <div class="card-brutal !border-ink bg-tag p-6 text-ink">
+        <h3 class="font-mono text-xs font-bold uppercase tracking-widest text-ink/70">04 / Maintenance</h3>
+        <p class="mt-2 font-display text-5xl">{{ $maintenanceAssets }}</p>
     </div>
 
 </div>
 
-<div class="bg-white shadow rounded mt-8">
+<div class="mt-6 grid grid-cols-1 gap-5 md:grid-cols-2">
 
-    <div class="p-6 border-b">
+    <div class="card-brutal p-6">
+        <h3 class="font-mono text-xs font-bold uppercase tracking-widest text-ink/60">Employees</h3>
+        <p class="mt-2 font-display text-5xl">{{ $totalEmployees }}</p>
+    </div>
 
-        <h3 class="text-xl font-semibold">
+    <div class="card-brutal p-6">
+        <h3 class="font-mono text-xs font-bold uppercase tracking-widest text-ink/60">Categories</h3>
+        <p class="mt-2 font-display text-5xl">{{ $totalCategories }}</p>
+    </div>
 
-            Recent Assignments
+</div>
 
-        </h3>
+<div class="card-brutal mt-6">
 
+    <div class="border-b-3 border-ink px-6 py-4">
+        <h3 class="font-display text-lg uppercase tracking-tight">Recent Assignments</h3>
     </div>
 
     <table class="w-full">
 
-        <thead class="bg-gray-100">
-
-        <tr>
-
-            <th class="p-3 text-left">Asset</th>
-            <th class="text-left">Employee</th>
-            <th class="text-left">Assigned Date</th>
-
+        <thead>
+        <tr class="border-b-3 border-ink bg-ink text-paper">
+            <th class="p-3 text-left font-mono text-xs uppercase tracking-widest">Asset</th>
+            <th class="p-3 text-left font-mono text-xs uppercase tracking-widest">Employee</th>
+            <th class="p-3 text-left font-mono text-xs uppercase tracking-widest">Assigned Date</th>
         </tr>
-
         </thead>
 
         <tbody>
-
-        @forelse($recentAssignments as $assignment)
-
-        <tr class="border-t">
-
-            <td class="p-3">
-
-                {{ $assignment->asset->name }}
-
-            </td>
-
-            <td>
-
-                {{ $assignment->employee->name }}
-
-            </td>
-
-            <td>
-
-                {{ $assignment->assigned_at }}
-
-            </td>
-
-        </tr>
-
+        @forelse ($recentAssignments as $assignment)
+            <tr class="border-b-2 border-ink/15">
+                <td class="p-3 font-mono text-sm">{{ $assignment->asset->name }}</td>
+                <td class="p-3 font-mono text-sm">{{ $assignment->employee->name }}</td>
+                <td class="p-3 font-mono text-sm">{{ $assignment->assigned_at }}</td>
+            </tr>
         @empty
-
-        <tr>
-
-            <td colspan="3" class="text-center p-6">
-
-                No assignments yet.
-
-            </td>
-
-        </tr>
-
+            <tr>
+                <td colspan="3" class="p-8 text-center font-mono text-sm text-ink/50">
+                    NO ASSIGNMENTS YET.
+                </td>
+            </tr>
         @endforelse
-
         </tbody>
 
     </table>

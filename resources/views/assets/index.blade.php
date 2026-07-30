@@ -15,265 +15,149 @@
     }"
 >
 
-<div class="flex justify-between items-center mb-6">
-    <h1 class="text-3xl font-bold">Assets</h1>
+<div class="mb-6 flex flex-wrap items-center justify-between gap-4">
+    <h1 class="font-display text-3xl uppercase tracking-tight">Assets</h1>
 
-    <a href="{{ route('assets.create') }}"
-       class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">
-        Add Asset
-    </a>
-    <a href="{{ route('export.assets') }}"
-   class="inline-flex items-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
-    Export Excel
-</a>
-    
+    <div class="flex gap-3">
+        <a href="{{ route('export.assets') }}" class="btn-brutal-ghost">
+            Export Excel
+        </a>
+        <a href="{{ route('assets.create') }}" class="btn-brutal-accent">
+            + Add Asset
+        </a>
+    </div>
 </div>
 
 <!-- Search & Filter -->
-<form method="GET" class="mb-6 grid grid-cols-1 md:grid-cols-5 gap-4">
+<form method="GET" class="card-brutal mb-6 grid grid-cols-1 gap-3 p-4 md:grid-cols-5">
 
     <input
         type="text"
         name="search"
         value="{{ request('search') }}"
-        placeholder="Search by Code, Name or Serial..."
-        class="border rounded px-3 py-2">
+        placeholder="SEARCH CODE / NAME / SERIAL..."
+        class="input-brutal placeholder:font-mono">
 
-    <select
-        name="category"
-        class="border rounded px-3 py-2">
-
+    <select name="category" class="input-brutal">
         <option value="">All Categories</option>
-
-        @foreach($categories as $category)
-
-            <option
-                value="{{ $category->id }}"
-                @selected(request('category') == $category->id)>
-
+        @foreach ($categories as $category)
+            <option value="{{ $category->id }}" @selected(request('category') == $category->id)>
                 {{ $category->name }}
-
             </option>
-
         @endforeach
-
     </select>
 
-    <select
-        name="status"
-        class="border rounded px-3 py-2">
-
+    <select name="status" class="input-brutal">
         <option value="">All Status</option>
-
-        <option
-            value="Available"
-            @selected(request('status') == 'Available')>
-
-            Available
-
-        </option>
-
-        <option
-            value="Assigned"
-            @selected(request('status') == 'Assigned')>
-
-            Assigned
-
-        </option>
-
-        <option
-            value="Maintenance"
-            @selected(request('status') == 'Maintenance')>
-
-            Maintenance
-
-        </option>
-
-        <option
-            value="Retired"
-            @selected(request('status') == 'Retired')>
-
-            Retired
-
-        </option>
-
+        <option value="Available" @selected(request('status') == 'Available')>Available</option>
+        <option value="Assigned" @selected(request('status') == 'Assigned')>Assigned</option>
+        <option value="Maintenance" @selected(request('status') == 'Maintenance')>Maintenance</option>
+        <option value="Retired" @selected(request('status') == 'Retired')>Retired</option>
     </select>
 
-    <button
-        type="submit"
-        class="bg-blue-600 hover:bg-blue-700 text-white rounded px-4">
-
+    <button type="submit" class="btn-brutal-primary">
         Search
-
     </button>
 
-    <a
-        href="{{ route('assets.index') }}"
-        class="bg-gray-500 hover:bg-gray-600 text-white rounded px-4 flex items-center justify-center">
-
+    <a href="{{ route('assets.index') }}" class="btn-brutal-ghost">
         Reset
-
     </a>
 
 </form>
 
-@if($assets->count())
+@if ($assets->count())
 
-<div class="mb-3 text-gray-600">
-
-    Showing <strong>{{ $assets->total() }}</strong> asset(s)
-
+<div class="mb-3 font-mono text-xs uppercase tracking-widest text-ink/60">
+    Showing <span class="font-bold text-ink">{{ $assets->total() }}</span> asset(s)
 </div>
 
-<div class="bg-white rounded-lg shadow overflow-hidden">
+<div class="card-brutal overflow-hidden">
 
     <div class="overflow-x-auto">
 
         <table class="w-full">
 
-            <thead class="bg-gray-200">
-
-                <tr>
-
-                    <th class="p-3 text-left">Code</th>
-                    <th class="p-3 text-left">Name</th>
-                    <th class="p-3 text-left">Category</th>
-                    <th class="p-3 text-left">Status</th>
-                    <th class="p-3 text-left">Cost</th>
-                    <th class="p-3 text-center">Actions</th>
-
+            <thead>
+                <tr class="border-b-3 border-ink bg-ink text-paper">
+                    <th class="p-3 text-left font-mono text-xs uppercase tracking-widest">Code</th>
+                    <th class="p-3 text-left font-mono text-xs uppercase tracking-widest">Name</th>
+                    <th class="p-3 text-left font-mono text-xs uppercase tracking-widest">Category</th>
+                    <th class="p-3 text-left font-mono text-xs uppercase tracking-widest">Status</th>
+                    <th class="p-3 text-left font-mono text-xs uppercase tracking-widest">Cost</th>
+                    <th class="p-3 text-center font-mono text-xs uppercase tracking-widest">Actions</th>
                 </tr>
-
             </thead>
 
             <tbody>
-
-            @foreach($assets as $asset)
-
-                <tr class="border-t hover:bg-gray-50">
+            @foreach ($assets as $asset)
+                <tr class="border-b-2 border-ink/15 hover:bg-tag/10">
 
                     <td class="p-3">
                         <a
-    href="#"
-    @click.prevent="
-        qrModal = true;
-        selectedAsset = {
-            code: '{{ $asset->asset_code }}',
-            qr: '{{ route('assets.qr', $asset) }}',
-            download: '{{ route('assets.qr.download', $asset) }}'
-        };
-    "
-    class="text-blue-600 underline hover:text-blue-800 hover:font-semibold transition duration-200 cursor-pointer"
->
-    {{ $asset->asset_code }}
-</a>
+                            href="#"
+                            @click.prevent="
+                                qrModal = true;
+                                selectedAsset = {
+                                    code: '{{ $asset->asset_code }}',
+                                    qr: '{{ route('assets.qr', $asset) }}',
+                                    download: '{{ route('assets.qr.download', $asset) }}'
+                                };
+                            "
+                            class="font-mono text-sm font-bold underline decoration-2 underline-offset-2 hover:bg-tag"
+                        >
+                            {{ $asset->asset_code }}
+                        </a>
                     </td>
 
-                    <td class="p-3">
-                        {{ $asset->name }}
-                    </td>
+                    <td class="p-3 font-mono text-sm">{{ $asset->name }}</td>
+
+                    <td class="p-3 font-mono text-sm text-ink/70">{{ optional($asset->category)->name }}</td>
 
                     <td class="p-3">
-                        {{ optional($asset->category)->name }}
-                    </td>
-
-                    <td class="p-3">
-
                         @switch($asset->status)
-
                             @case('Available')
-
-                                <span class="bg-green-500 text-white px-3 py-1 rounded-full text-sm">
-
-                                    Available
-
-                                </span>
-
+                                <span class="stamp stamp-go">Available</span>
                                 @break
-
                             @case('Assigned')
-
-                                <span class="bg-blue-500 text-white px-3 py-1 rounded-full text-sm">
-
-                                    Assigned
-
-                                </span>
-
+                                <span class="stamp stamp-wire">Assigned</span>
                                 @break
-
                             @case('Maintenance')
-
-                                <span class="bg-yellow-500 text-white px-3 py-1 rounded-full text-sm">
-
-                                    Maintenance
-
-                                </span>
-
+                                <span class="stamp stamp-hold">Maintenance</span>
                                 @break
-
                             @case('Retired')
-
-                                <span class="bg-gray-500 text-white px-3 py-1 rounded-full text-sm">
-
-                                    Retired
-
-                                </span>
-
+                                <span class="stamp stamp-signal">Retired</span>
                                 @break
-
                             @default
-
-                                <span class="bg-gray-300 text-gray-700 px-3 py-1 rounded-full text-sm">
-
-                                    {{ $asset->status }}
-
-                                </span>
-
+                                <span class="stamp stamp-mute">{{ $asset->status }}</span>
                         @endswitch
-
                     </td>
 
-                    <td class="p-3">
-
-                        ${{ number_format($asset->cost, 2) }}
-
-                    </td>
+                    <td class="p-3 font-mono text-sm">${{ number_format($asset->cost, 2) }}</td>
 
                     <td class="p-3 text-center">
-
                         <a
                             href="{{ route('assets.edit', $asset) }}"
-                            class="text-blue-600 hover:underline mr-3">
-
+                            class="font-mono text-xs font-bold uppercase underline decoration-2 underline-offset-2 mr-4">
                             Edit
-
                         </a>
 
                         <form
                             action="{{ route('assets.destroy', $asset) }}"
                             method="POST"
                             class="inline">
-
                             @csrf
                             @method('DELETE')
-
                             <button
                                 type="submit"
                                 onclick="return confirm('Are you sure you want to delete this asset?')"
-                                class="text-red-600 hover:underline">
-
+                                class="font-mono text-xs font-bold uppercase text-signal underline decoration-2 underline-offset-2">
                                 Delete
-
                             </button>
-
                         </form>
-
                     </td>
 
                 </tr>
-
             @endforeach
-
             </tbody>
 
         </table>
@@ -282,30 +166,17 @@
 
 </div>
 
-<div class="mt-6">
-
+<div class="mt-6 font-mono text-sm">
     {{ $assets->links() }}
-
 </div>
 
 @else
 
-<div class="bg-white rounded-lg shadow p-8 text-center">
-
-    <p class="text-gray-500 text-lg">
-
-        No assets found.
-
-    </p>
-
-    <a
-        href="{{ route('assets.create') }}"
-        class="inline-block mt-5 bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded">
-
+<div class="card-brutal p-10 text-center">
+    <p class="font-mono text-sm uppercase tracking-widest text-ink/50">No assets found.</p>
+    <a href="{{ route('assets.create') }}" class="btn-brutal-accent mt-5 inline-flex">
         Add Your First Asset
-
     </a>
-
 </div>
 
 @endif
@@ -315,54 +186,43 @@
     x-show="qrModal"
     x-transition.opacity
     x-cloak
-    class="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
+    class="fixed inset-0 z-50 flex items-center justify-center bg-ink/70 p-4"
     style="display: none;"
 >
 
-    <!-- Modal -->
     <div
         @click.outside="qrModal = false"
-        class="bg-white rounded-xl shadow-xl w-full max-w-md p-6"
+        class="card-brutal !shadow-brutal-lg w-full max-w-md p-6"
     >
 
-        <h2 class="text-2xl font-bold text-center mb-6">
+        <h2 class="font-display text-xl uppercase tracking-tight text-center">
             Asset QR Code
         </h2>
 
-        <div class="text-center">
+        <div class="mt-6 text-center">
 
-            <p class="font-semibold">
-                Asset Code
-            </p>
-
-            <p class="text-lg mb-5" x-text="selectedAsset.code"></p>
+            <p class="font-mono text-xs font-bold uppercase tracking-widest text-ink/60">Asset Code</p>
+            <p class="mb-5 font-mono text-lg font-bold" x-text="selectedAsset.code"></p>
 
             <img
                 :src="selectedAsset.qr"
                 alt="QR Code"
-                class="mx-auto w-72 h-72 border rounded-lg"
+                class="mx-auto h-64 w-64 border-3 border-ink"
             >
 
-            <p class="mt-5 text-gray-600">
+            <p class="mt-5 font-mono text-xs text-ink/60">
                 Scan with your mobile phone to view this asset's information.
             </p>
 
         </div>
 
-        <div class="flex justify-center gap-4 mt-8">
+        <div class="mt-8 flex justify-center gap-3">
 
-            <a
-                :href="selectedAsset.download"
-                download
-                class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg transition"
-            >
+            <a :href="selectedAsset.download" download class="btn-brutal-accent">
                 Download QR
             </a>
 
-            <button
-                @click="qrModal = false"
-                class="bg-gray-500 hover:bg-gray-600 text-white px-5 py-2 rounded-lg transition"
-            >
+            <button @click="qrModal = false" class="btn-brutal-ghost">
                 Close
             </button>
 

@@ -4,3 +4,72 @@
 [x-cloak] {
     display: none !important;
 }
+
+/* ============================================================
+   BRUTALIST SYSTEM — inventory-stencil / manifest-tag aesthetic
+   Flat ink-on-paper, 3px borders, hard offset shadows, no blur,
+   no radius. Status colors read like rubber-stamped tags.
+   ============================================================ */
+
+@layer base {
+    body {
+        @apply bg-paper text-ink;
+        background-image:
+            linear-gradient(#11111112 1px, transparent 1px),
+            linear-gradient(90deg, #11111112 1px, transparent 1px);
+        background-size: 32px 32px;
+    }
+}
+
+@layer components {
+    /* Buttons — thick border, hard shadow, presses flat on click */
+    .btn-brutal {
+        @apply inline-flex items-center justify-center gap-2 border-3 border-ink
+               px-5 py-2.5 font-mono text-xs font-bold uppercase tracking-widest
+               shadow-brutal-sm transition-all duration-100
+               hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-brutal
+               active:translate-x-0 active:translate-y-0 active:shadow-none
+               disabled:opacity-40 disabled:pointer-events-none;
+    }
+    .btn-brutal-primary { @apply btn-brutal bg-ink text-paper; }
+    .btn-brutal-accent  { @apply btn-brutal bg-tag text-ink; }
+    .btn-brutal-ghost   { @apply btn-brutal bg-paper text-ink; }
+    .btn-brutal-danger  { @apply btn-brutal bg-signal text-paper; }
+
+    /* Inputs — flat, mono, lifts on focus instead of glowing */
+    .input-brutal {
+        @apply w-full border-3 border-ink bg-paper px-3 py-2.5 font-mono text-sm text-ink
+               placeholder:text-ink/40 transition-all duration-100
+               focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-brutal-sm;
+    }
+
+    /* Card / panel */
+    .card-brutal {
+        @apply border-3 border-ink bg-paper shadow-brutal;
+    }
+
+    /* Status stamp — square tag, not a pill */
+    .stamp {
+        @apply inline-flex items-center gap-1.5 border-2 border-ink px-2.5 py-1
+               font-mono text-[11px] font-bold uppercase tracking-wider text-ink;
+    }
+    .stamp::before {
+        content: '';
+        @apply block h-1.5 w-1.5 border border-ink;
+    }
+    .stamp-go     { @apply bg-go text-paper; }
+    .stamp-wire   { @apply bg-wire text-paper; }
+    .stamp-hold   { @apply bg-hold text-ink; }
+    .stamp-signal { @apply bg-signal text-paper; }
+    .stamp-mute   { @apply bg-ink/10 text-ink; }
+
+    /* Manifest-style numbered nav row (sidebar) */
+    .nav-brutal {
+        @apply flex items-center gap-3 border-b-2 border-paper/20 px-6 py-4
+               font-mono text-sm uppercase tracking-wider text-paper/70
+               transition-colors hover:bg-paper/10 hover:text-paper;
+    }
+    .nav-brutal.is-active {
+        @apply bg-tag text-ink hover:bg-tag hover:text-ink;
+    }
+}
