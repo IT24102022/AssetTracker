@@ -656,26 +656,9 @@ Included:
 - Database Seeders
 - Model Factories
 
----
-
-# Screenshots
-
-You may include screenshots here.
-
-Suggested screenshots:
-
-- Login Page
-- Dashboard
-- Categories
-- Employees
-- Assets
-- Asset Assignment
-- QR Code Popup
-- Public Asset Details Page
-- Mailtrap Email
-- Excel Export
 
 ---
+
 
 # Future Improvements
 
