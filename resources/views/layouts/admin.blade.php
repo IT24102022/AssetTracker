@@ -71,11 +71,23 @@
 
             </h2>
 
-            <div>
+            <div class="flex items-center gap-4">
 
-                {{ auth()->user()->name }}
+    <span class="font-medium text-gray-700">
+        {{ auth()->user()->name }}
+    </span>
 
-            </div>
+    <form method="POST" action="{{ route('logout') }}">
+        @csrf
+        <button
+            type="submit"
+            class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md"
+        >
+            Logout
+        </button>
+    </form>
+
+</div>
 
         </header>
 
