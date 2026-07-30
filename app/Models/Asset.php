@@ -28,4 +28,5 @@ class Asset extends Model
     {
         return $this->hasMany(AssetAssignment::class);
     }
+    
 }

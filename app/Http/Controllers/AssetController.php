@@ -10,13 +10,15 @@ use App\Http\Requests\UpdateAssetRequest;
 
 class AssetController extends Controller
 {
-    public function index()
+public function index()
 {
     $assets = Asset::with('category')
         ->when(request('search'), function ($query) {
-            $query->where('asset_code', 'like', '%' . request('search') . '%')
+            $query->where(function ($q) {
+                $q->where('asset_code', 'like', '%' . request('search') . '%')
                   ->orWhere('name', 'like', '%' . request('search') . '%')
                   ->orWhere('serial_number', 'like', '%' . request('search') . '%');
+            });
         })
         ->when(request('category'), function ($query) {
             $query->where('category_id', request('category'));

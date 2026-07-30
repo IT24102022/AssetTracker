@@ -71,9 +71,6 @@ Route::get('/export/assignment-history', [ExportController::class, 'assignmentHi
     Route::get('/asset-info/{asset}', [AssetController::class, 'publicShow'])
     ->name('assets.public');
 
-    Route::get('/asset-info/{asset}', [QRCodeController::class, 'showAsset'])
-    ->name('assets.public');
-
 Route::get('/asset-info/{asset}/qr', [QRCodeController::class, 'qr'])
     ->name('assets.qr');
 
